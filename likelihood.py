@@ -44,14 +44,32 @@ def loglikelihood(args):
             print "Chars shape: "+str(len(chars))
             print "All chars: "  +str(chars)
             print "==============================================="
-            print "Char\tProb.\tNegative Log Prob"
+            print "Char:Prob.\tTop1 Choice\tTop2 Choice\tTop3 Choice"
             print "'" + charlist[0]  + "'"
             for c, p in zip(charlist[1:], probs[:-1]):
+                # convert the p, which is (1,c) in shape, to a 1-dim arraw
+                p = p.reshape(p.shape[1])
                 # find the index of c in chars,
                 # see http://stackoverflow.com/questions/9542738/python-find-in-list
-                prob = p[0][chars.index(c)]
+                i = chars.index(c)
+                # get the prob of c and its log10.
+                prob = p[i]
                 logProb = -math.log10(prob)
-                print "'" + c +"'\t" + "%.5f" %prob + "\t"+ "%.5f" %logProb
+                # get the 3 highest probs. Print as {'char':prob}
+                # first argsort probs to get the index of sorted probs.
+                order = p.argsort()
+                top3= order[::-1][:3]
+                # print top3
+                # print p[top3]
+                # print type(chars)
+                chlist = np.array(list(chars))
+                # print chlist[top3]
+                # print zip(chlist[top3], p[top3])
+
+                top3output = "\t".join("'"+str(ci)+"'"+": %.4f"%pi for ci, pi in zip(chlist[top3], p[top3]))
+                # print
+#                print "'" + c +"':" + "%.5f" %prob + "\t"+ "%.5f" %logProb + top3output
+                print "'" + c +"':" + "%.5f\t" %prob + top3output
                 sumLogProb += logProb
                 #print c + " (" + str(chars.index(c))+ "): " + str(prob)
                 # print (p)
