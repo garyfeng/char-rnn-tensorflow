@@ -42,6 +42,10 @@ def train(args):
     data_loader = TextLoader(args.data_dir, args.batch_size, args.seq_length)
     args.vocab_size = data_loader.vocab_size
 
+    # garyfeng: if save_dir doesn't exist, crete it.
+    if not os.path.exists(args.save_dir):
+        os.makedirs(args.save_dir)
+
     with open(os.path.join(args.save_dir, 'config.pkl'), 'w') as f:
         cPickle.dump(args, f)
     with open(os.path.join(args.save_dir, 'chars_vocab.pkl'), 'w') as f:
