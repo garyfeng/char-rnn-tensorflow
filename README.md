@@ -1,5 +1,12 @@
 # Log
 
+## 2015-12-30: updated likelihood.py and training.py
+
+`training.py`: now creates the `save_dir` if it doesn't exist.
+
+`likelihood.py`: now prints the top 3 predictions of the next letter. 
+
+
 ## 2015-12-29: adding likelihood calculation
 
 After you train a RNN, you can use the following to calc the prob. of a
@@ -87,7 +94,7 @@ With this representation we are able to let the RNN learn the dynamics of
 editing, albeit a simple kind.
 
 The initial try used LSTM, with default parameters from the `char-rnn-tensorflow`
-code base. The result (reported elsewhere) is encouraging. 
+code base. The result (reported elsewhere) is encouraging.
 
 ## 2015-12-20: Adding
 
