@@ -40,11 +40,11 @@ def loglikelihood(args):
             [charlist, probs] = model.loglikelihood(sess, chars, vocab, args.text)
             # print
             sumLogProb = 0.0
-            print "Probs shape: "+str(probs[1].shape)
-            print "Chars shape: "+str(len(chars))
-            print "All chars: "  +str(chars)
+            # print "Probs shape: "+str(probs[1].shape)
+            # print "Chars shape: "+str(len(chars))
+            # print "All chars: "  +str(chars)
             print "==============================================="
-            print "Char:Prob.\tTop1 Choice\tTop2 Choice\tTop3 Choice"
+            print "Input:Prob.\t1st Pred\t2nd Pred\t3rd Pred"
             print "'" + charlist[0]  + "'"
             for c, p in zip(charlist[1:], probs[:-1]):
                 # convert the p, which is (1,c) in shape, to a 1-dim arraw
@@ -67,9 +67,10 @@ def loglikelihood(args):
                 # print zip(chlist[top3], p[top3])
 
                 top3output = "\t".join("'"+str(ci)+"'"+": %.4f"%pi for ci, pi in zip(chlist[top3], p[top3]))
+                firstChoice= "*" if c==chlist[top3[0]] else ""
                 # print
 #                print "'" + c +"':" + "%.5f" %prob + "\t"+ "%.5f" %logProb + top3output
-                print "'" + c +"':" + "%.5f\t" %prob + top3output
+                print "'" + c +"':" + "%.5f" %prob + firstChoice +"\t"+ top3output
                 sumLogProb += logProb
                 #print c + " (" + str(chars.index(c))+ "): " + str(prob)
                 # print (p)
